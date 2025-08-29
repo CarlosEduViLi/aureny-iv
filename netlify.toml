@@ -1,0 +1,8 @@
+[build]
+  publish = "."
+
+# Se um dia virar SPA, descomente:
+# [[redirects]]
+#   from = "/*"
+#   to = "/index.html"
+#   status = 200
