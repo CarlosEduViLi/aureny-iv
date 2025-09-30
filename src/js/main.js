@@ -184,23 +184,6 @@ document.addEventListener("DOMContentLoaded", () => {
         feedbackMessage.textContent = "Erro ao enviar. Tente novamente.";
       }
     });
-
-  // =========================
-  // B) Auto-abrir modal se veio de ?thanks=1
-  // =========================
-  const params = new URLSearchParams(window.location.search);
-  if (params.get("thanks") === "1") {
-    abrirModalAgradecimento();
-    // limpa a query da URL para não reabrir ao recarregar
-    const newUrl = window.location.pathname + (window.location.hash || "");
-    window.history.replaceState({}, "", newUrl);
-  }
-
-    if (closeBtn) closeBtn.addEventListener("click", fecharModalAgradecimento);
-    if (okBtn) okBtn.addEventListener("click", fecharModalAgradecimento);
-    modal?.addEventListener("click", (e) => {
-      if (e.target === modal) fecharModalAgradecimento();
-    });
   }
 
   // =========================
@@ -250,10 +233,16 @@ document.addEventListener("DOMContentLoaded", () => {
   if (closeBtn) closeBtn.addEventListener("click", fecharModalAgradecimento);
   if (okBtn) okBtn.addEventListener("click", () => {
     fecharModalAgradecimento();
-    // se quiser garantir voltar ao topo da Home
-    // location.hash = "#home";
   });
   modal?.addEventListener("click", (e) => {
     if (e.target === modal) fecharModalAgradecimento();
   });
+
+  // Auto-abrir modal quando veio de /?thanks=1 (agora funciona mesmo sem o form)
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("thanks") === "1") {
+    abrirModalAgradecimento();
+    const newUrl = window.location.pathname + (window.location.hash || "");
+    window.history.replaceState({}, "", newUrl);
+  }
 });
