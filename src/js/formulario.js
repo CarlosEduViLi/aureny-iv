@@ -243,37 +243,57 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     // Toggle com limite MAX_OPCOES + mensagens
-    function handleOptionChange(e) {
-      const cb = e.target.closest("label")?.querySelector("input.eixo-checkbox");
-      if (!cb) return;
-      const eixoId = cb.dataset.eixo;
-      selections[eixoId] = selections[eixoId] || [];
-    
-      if (cb.checked) {
-        cb.checked = false;
-        selections[eixoId] = selections[eixoId].filter((x) => x !== cb.value);
-      } else {
-        if (selections[eixoId].length >= MAX_OPCOES) {
-          showStepError(eixoId, `Máximo de ${MAX_OPCOES} selecionados neste eixo.`);
-          return;
+    function onCheckboxChange(e) {
+        const cb = e.target;
+        if (!cb.matches("input.eixo-checkbox")) return;
+
+        const eixoId = cb.dataset.eixo;
+        selections[eixoId] = selections[eixoId] || [];
+
+        if (cb.checked) {
+            // impede duplicata e respeita o limite
+            if (selections[eixoId].includes(cb.value)) {
+                // já estava no array; nada a fazer
+                syncVisual(eixoId);
+                return;
+            }
+            if (selections[eixoId].length >= MAX_OPCOES) {
+                cb.checked = false; // volta ao estado anterior
+                showStepError(eixoId, `Máximo de ${MAX_OPCOES} selecionados neste eixo.`);
+                return;
+            }
+            selections[eixoId].push(cb.value);
+        } else {
+            // desmarca => remove do array
+            selections[eixoId] = selections[eixoId].filter(v => v !== cb.value);
         }
-        cb.checked = true;
-        selections[eixoId].push(cb.value);
-      }
-      syncVisual(eixoId);
+
+        syncVisual(eixoId);
     }
     
+
+    function getCorDoEixo(eixoId){
+        return (config.find(e => e.id === eixoId)?.cor) || "blue";
+    }
+
     function syncVisual(eixoId) {
-      document
-        .querySelectorAll(`input.eixo-checkbox[data-eixo="${eixoId}"]`)
-        .forEach((input) => {
-          const card = input.closest("label");
-          const box = card.querySelector(".check-visual");
-          const active = selections[eixoId]?.includes(input.value);
-          card.classList.toggle("border-blue-500", active);
-          card.classList.toggle("bg-blue-50", active);
-          box.classList.toggle("bg-blue-600", active);
-          box.classList.toggle("border-blue-600", active);
+        const cor = getCorDoEixo(eixoId);
+        document
+            .querySelectorAll(`input.eixo-checkbox[data-eixo="${eixoId}"]`)
+            .forEach((input) => {
+            const card = input.closest("label");
+            const box = card.querySelector(".check-visual");
+            const active = selections[eixoId]?.includes(input.value);
+
+            // Limpa classes ‘azuis’ antigas
+            card.classList.remove("border-blue-500","bg-blue-50");
+            box.classList.remove("bg-blue-600","border-blue-600");
+
+            // Aplica a do eixo atual (usa template string)
+            card.classList.toggle(`border-${cor}-500`, active);
+            card.classList.toggle(`bg-${cor}-50`, active);
+            box.classList.toggle(`bg-${cor}-600`, active);
+            box.classList.toggle(`border-${cor}-600`, active);
         });
     }
     
@@ -330,8 +350,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     // ==== EVENTOS ====
-    stepsContainer.addEventListener("click", handleOptionChange);
-    reviewStepEl.addEventListener("click", handleOptionChange);
+    stepsContainer.addEventListener("change", onCheckboxChange);
+
     
     form.addEventListener("click", (e) => {
       const nextBtn = e.target.closest(".btn-next");
