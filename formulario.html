@@ -38,13 +38,15 @@
             </div>
 
             <!-- Form Steps -->
-            <form id="multi-step-form" method="POST" data-netlify="true" netlify>
+            <form id="multi-step-form"
+                    name="prioridades-aureny"
+                    method="POST"
+                    data-netlify="true"
+                    netlify
+                    action="/?thanks=1">
                 <input type="hidden" name="form-name" value="prioridades-aureny">
-                <!-- Campo honeypot opcional -->
                 <input type="text" name="bot-field" class="hidden" tabindex="-1" autocomplete="off">
-                <!-- Container onde os steps serão injetados -->
                 <div id="steps-container"></div>
-                <!-- Review (injetado) -->
                 <div id="review-step" class="hidden"></div>
             </form>
         </div>

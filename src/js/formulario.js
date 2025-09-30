@@ -264,13 +264,26 @@ document.addEventListener("DOMContentLoaded", () => {
         .join("&");
     }
 
-    function submitForm(e) {
-      if (location.protocol === 'file:') {
-        alert('Execute com um servidor local (ex: npx serve .) para testar o envio.');
-        e.preventDefault();
-      } else {
-        // deixa submissão seguir; Netlify processa e você pode usar uma página de obrigado
+    function submitForm(e){
+      e.preventDefault();
+      if (location.protocol === 'file:'){
+        alert('Use um servidor local (npx serve .) para testar.');
+        return;
       }
+      const payload = {
+        "form-name": "prioridades-aureny",
+        ...config.reduce((acc, eixo)=>{
+          acc[eixo.id] = (selections[eixo.id]||[]).join(',');
+          return acc;
+        }, {})
+      };
+      fetch("/", {
+        method:"POST",
+        headers:{"Content-Type":"application/x-www-form-urlencoded"},
+        body: encode(payload)
+      })
+      .then(()=> window.location.href = "/?thanks=1")
+      .catch(()=> alert("Erro ao enviar. Tente novamente."));
     }
 
     function attachEvents() {
