@@ -1,13 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("multi-step-form");
-    const stepsContainer = document.getElementById("steps-container");
-    const reviewStepEl = document.getElementById("review-step");
-    const progressText = document.getElementById("progress-text");
-    const progressBar = document.getElementById("progress-bar");
-
-    let currentStep = 0; // índice
-    const selections = {}; // { eixoId: [opcaoId,...] }
-
+    // Config de eixos
     const config = [
       {
         id: "educacao",
@@ -39,8 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
         id: "infraestrutura",
         titulo: "Mobilidade, Infraestrutura e Segurança",
         cor: "orange",
-        descricao:
-          "Vias, transporte, iluminação, segurança pública e urbanização.",
+        descricao: "Vias, transporte, iluminação, segurança pública e urbanização.",
         opcoes: [
           { id: "pavimentacao", label: "Pavimentação de ruas e calçadas" },
           { id: "transporte", label: "Melhoria do transporte público" },
@@ -88,16 +79,39 @@ document.addEventListener("DOMContentLoaded", () => {
         ],
       },
     ];
-
-    const MAX_OPCOES = 4;
-
-    // Build steps dynamically based on config
+    
+    // ==== NOVAS DEFINIÇÕES (pedido) ====
+    const MAX_OPCOES = 2;
+    
+    function showStepError(eixoId, msg) {
+      const p = document.getElementById(`limit-msg-${eixoId}`);
+      if (!p) return;
+      p.textContent = msg;
+      p.classList.remove("text-gray-500");
+      p.classList.add("text-red-600");
+      setTimeout(() => {
+        p.textContent = "";
+        p.classList.add("text-gray-500");
+        p.classList.remove("text-red-600");
+      }, 3000);
+    }
+    // ===================================
+    
+    const form = document.getElementById("multi-step-form");
+    const stepsContainer = document.getElementById("steps-container");
+    const reviewStepEl = document.getElementById("review-step");
+    const progressText = document.getElementById("progress-text");
+    const progressBar = document.getElementById("progress-bar");
+    
+    let currentStep = 0;
+    const selections = {}; // { eixoId: [opcaoId,...] }
+    
     function buildSteps() {
       config.forEach((eixo, idx) => {
         const stepDiv = document.createElement("div");
         stepDiv.className = `step ${idx === 0 ? "block" : "hidden"}`;
         stepDiv.dataset.stepIndex = idx;
-
+    
         stepDiv.innerHTML = `
           <div class="flex items-center mb-6">
             <div class="w-10 h-10 bg-${eixo.cor}-600 text-white rounded-full flex items-center justify-center font-bold text-lg mr-4">
@@ -113,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
           <div class="space-y-4 mb-8">
             <h3 class="text-lg font-semibold text-gray-800 mb-4">
-              Quais desses itens são prioritários para você? (Selecione até ${MAX_OPCOES})
+              Selecione até ${MAX_OPCOES} itens (mínimo 1 para avançar)
             </h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               ${eixo.opcoes
@@ -149,7 +163,7 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
         stepsContainer.appendChild(stepDiv);
       });
-
+    
       // Review step (índice final)
       reviewStepEl.dataset.stepIndex = config.length; // último
       reviewStepEl.className = "step hidden";
@@ -162,7 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <p class="text-xl text-gray-600">Revise suas respostas antes de enviar</p>
         </div>
         <div class="bg-gray-50 rounded-xl p-6 mb-8">
-          <h3 class="text-xl font-semibold text-gray-800 mb-4">Resumo das suas prioridades:</h3>
+          <h3 class="text-xl font-semibold text-gray-800 mb-4">Resumo:</h3>
           <div id="review-content" class="space-y-4"></div>
         </div>
         <div class="flex justify-between pt-6 border-t border-gray-200">
@@ -170,20 +184,23 @@ document.addEventListener("DOMContentLoaded", () => {
             <i class="fas fa-arrow-left mr-2"></i>Voltar
           </button>
           <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 flex items-center">
-            <i class="fas fa-paper-plane mr-2"></i>Enviar Respostas
+            <i class="fas fa-paper-plane mr-2"></i>Enviar
           </button>
         </div>
       `;
     }
-
+    
     function updateProgress() {
-      const totalSteps = config.length + 1; // inclui review
-      const stepDisplay = Math.min(currentStep + 1, totalSteps);
-      progressText.textContent = `Etapa ${stepDisplay} de ${totalSteps}`;
-      const percent = ((currentStep) / (totalSteps - 1)) * 100;
-      progressBar.style.width = `${percent}%`;
+      const totalSteps = config.length + 1;
+      const display = Math.min(currentStep + 1, totalSteps);
+      if (progressText)
+        progressText.textContent = `Etapa ${display} de ${totalSteps}`;
+      if (progressBar) {
+        const percent = (currentStep / (totalSteps - 1)) * 100;
+        progressBar.style.width = `${percent}%`;
+      }
     }
-
+    
     function showStep(index) {
       document.querySelectorAll(".step").forEach((s) => s.classList.add("hidden"));
       const target = document.querySelector(`.step[data-step-index="${index}"]`);
@@ -193,7 +210,7 @@ document.addEventListener("DOMContentLoaded", () => {
       updateProgress();
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
-
+    
     function buildReview() {
       const review = document.getElementById("review-content");
       review.innerHTML = config
@@ -206,29 +223,38 @@ document.addEventListener("DOMContentLoaded", () => {
           return `
             <div class="p-4 bg-white rounded-lg border border-gray-200">
               <h4 class="font-semibold text-gray-800">${eixo.titulo}</h4>
-              <p class="text-gray-600 text-sm">${labels}</p>
-            </div>`;
+                <p class="text-gray-600 text-sm">${labels}</p>
+            </div>
+          `;
         })
         .join("");
     }
-
+    
+    // ==== FUNÇÕES SUBSTITUÍDAS PELA SUA VERSÃO ====
+    
+    // validateStep com obrigatoriedade de 1 seleção
+    function validateStep(idx) {
+      if (idx >= config.length) return true;
+      const eixo = config[idx];
+      const temAlgo = (selections[eixo.id] || []).length > 0;
+      if (!temAlgo)
+        showStepError(eixo.id, "Selecione pelo menos uma opção para prosseguir.");
+      return temAlgo;
+    }
+    
+    // Toggle com limite MAX_OPCOES + mensagens
     function handleOptionChange(e) {
       const cb = e.target.closest("label")?.querySelector("input.eixo-checkbox");
       if (!cb) return;
       const eixoId = cb.dataset.eixo;
       selections[eixoId] = selections[eixoId] || [];
-
+    
       if (cb.checked) {
-        // toggle remove
         cb.checked = false;
         selections[eixoId] = selections[eixoId].filter((x) => x !== cb.value);
       } else {
         if (selections[eixoId].length >= MAX_OPCOES) {
-          const msg = document.getElementById(`limit-msg-${eixoId}`);
-          if (msg) {
-            msg.textContent = `Máximo de ${MAX_OPCOES} selecionados neste eixo.`;
-            setTimeout(() => (msg.textContent = ""), 3000);
-          }
+          showStepError(eixoId, `Máximo de ${MAX_OPCOES} selecionados neste eixo.`);
           return;
         }
         cb.checked = true;
@@ -236,7 +262,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       syncVisual(eixoId);
     }
-
+    
     function syncVisual(eixoId) {
       document
         .querySelectorAll(`input.eixo-checkbox[data-eixo="${eixoId}"]`)
@@ -250,66 +276,77 @@ document.addEventListener("DOMContentLoaded", () => {
           box.classList.toggle("border-blue-600", active);
         });
     }
-
-    function validateStep(idx) {
-      // Exigir ao menos 1 selecionado? Opcional. Aqui apenas permite seguir.
-      return true;
-    }
-
-    function encode(data) {
-      return Object.keys(data)
-        .map(
-          (k) => encodeURIComponent(k) + "=" + encodeURIComponent(data[k] ?? "")
-        )
+    
+    // URL encode
+    function encode(obj) {
+      return Object.keys(obj)
+        .map((k) => encodeURIComponent(k) + "=" + encodeURIComponent(obj[k] ?? ""))
         .join("&");
     }
-
-    function submitForm(e){
-      // Se quiser usar envio padrão Netlify (sem fetch), apenas preencher e deixar continuar
-      const campos = ["educacao","saude","infraestrutura","habitacao","ambiente","cultura"];
-      campos.forEach(id=>{
+    
+    // Submit (preenche inputs hidden + payload)
+    function submitForm(e) {
+      const campos = [
+        "educacao",
+        "saude",
+        "infraestrutura",
+        "habitacao",
+        "ambiente",
+        "cultura",
+      ];
+      campos.forEach((id) => {
         const inp = form.querySelector(`input[name="${id}"]`);
         if (inp) inp.value = (selections[id] || []).join(",");
       });
-
-      // Caso esteja usando fetch, descomente abaixo e mantenha e.preventDefault()
+    
+      // Monta JSON legível (labels)
+      const payloadObj = {};
+      config.forEach((eixo) => {
+        const ids = selections[eixo.id] || [];
+        payloadObj[eixo.id] = ids.map(
+          (id) => eixo.opcoes.find((o) => o.id === id)?.label || id
+        );
+      });
+      const payloadInput = document.getElementById("payload");
+      if (payloadInput) payloadInput.value = JSON.stringify(payloadObj);
+    
+      // Padrão Netlify (não impedir). Para usar fetch, descomente abaixo.
       // e.preventDefault();
-      // const payload = {
-      //   "form-name":"prioridades-aureny",
-      //   ...campos.reduce((acc,id)=>{
+      // const body = {
+      //   "form-name": "prioridades-aureny",
+      //   ...campos.reduce((acc, id) => {
       //     acc[id] = form.querySelector(`input[name="${id}"]`).value;
       //     return acc;
-      //   },{})
+      //   }, {}),
+      //   payload: payloadInput ? payloadInput.value : ""
       // };
-      // fetch("/",{
-      //   method:"POST",
-      //   headers:{"Content-Type":"application/x-www-form-urlencoded"},
-      //   body: encode(payload)
-      // }).then(()=> location.href="/?thanks=1")
-      //   .catch(()=> alert("Erro ao enviar. Tente novamente."));
+      // fetch("/", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      //   body: encode(body)
+      // })
+      //   .then(() => (location.href = "/?thanks=1"))
+      //   .catch(() => alert("Erro ao enviar. Tente novamente."));
     }
-
-    function attachEvents() {
-      // Delegação de opções
-      stepsContainer.addEventListener("click", handleOptionChange);
-      reviewStepEl.addEventListener("click", handleOptionChange);
-
-      form.addEventListener("click", (e) => {
-        const nextBtn = e.target.closest(".btn-next");
-        const prevBtn = e.target.closest(".btn-prev");
-        if (nextBtn) {
-          if (!validateStep(currentStep)) return;
-          showStep(Math.min(currentStep + 1, config.length));
-        } else if (prevBtn) {
-          showStep(Math.max(currentStep - 1, 0));
-        }
-      });
-
-      form.addEventListener("submit", submitForm);
-    }
-
+    
+    // ==== EVENTOS ====
+    stepsContainer.addEventListener("click", handleOptionChange);
+    reviewStepEl.addEventListener("click", handleOptionChange);
+    
+    form.addEventListener("click", (e) => {
+      const nextBtn = e.target.closest(".btn-next");
+      const prevBtn = e.target.closest(".btn-prev");
+      if (nextBtn) {
+        if (!validateStep(currentStep)) return;
+        showStep(Math.min(currentStep + 1, config.length));
+      } else if (prevBtn) {
+        showStep(Math.max(currentStep - 1, 0));
+      }
+    });
+    
+    form.addEventListener("submit", submitForm);
+    
     // Init
     buildSteps();
-    attachEvents();
     updateProgress();
 });
