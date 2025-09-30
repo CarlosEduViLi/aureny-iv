@@ -46,6 +46,15 @@
                     action="/?thanks=1">
                 <input type="hidden" name="form-name" value="prioridades-aureny">
                 <input type="text" name="bot-field" class="hidden" tabindex="-1" autocomplete="off">
+
+                <!-- Hidden para cada eixo (Netlify passa a enxergar os campos) -->
+                <input type="hidden" name="educacao">
+                <input type="hidden" name="saude">
+                <input type="hidden" name="infraestrutura">
+                <input type="hidden" name="habitacao">
+                <input type="hidden" name="ambiente">
+                <input type="hidden" name="cultura">
+
                 <div id="steps-container"></div>
                 <div id="review-step" class="hidden"></div>
             </form>

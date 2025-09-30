@@ -265,25 +265,28 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function submitForm(e){
-      e.preventDefault();
-      if (location.protocol === 'file:'){
-        alert('Use um servidor local (npx serve .) para testar.');
-        return;
-      }
-      const payload = {
-        "form-name": "prioridades-aureny",
-        ...config.reduce((acc, eixo)=>{
-          acc[eixo.id] = (selections[eixo.id]||[]).join(',');
-          return acc;
-        }, {})
-      };
-      fetch("/", {
-        method:"POST",
-        headers:{"Content-Type":"application/x-www-form-urlencoded"},
-        body: encode(payload)
-      })
-      .then(()=> window.location.href = "/?thanks=1")
-      .catch(()=> alert("Erro ao enviar. Tente novamente."));
+      // Se quiser usar envio padrão Netlify (sem fetch), apenas preencher e deixar continuar
+      const campos = ["educacao","saude","infraestrutura","habitacao","ambiente","cultura"];
+      campos.forEach(id=>{
+        const inp = form.querySelector(`input[name="${id}"]`);
+        if (inp) inp.value = (selections[id] || []).join(",");
+      });
+
+      // Caso esteja usando fetch, descomente abaixo e mantenha e.preventDefault()
+      // e.preventDefault();
+      // const payload = {
+      //   "form-name":"prioridades-aureny",
+      //   ...campos.reduce((acc,id)=>{
+      //     acc[id] = form.querySelector(`input[name="${id}"]`).value;
+      //     return acc;
+      //   },{})
+      // };
+      // fetch("/",{
+      //   method:"POST",
+      //   headers:{"Content-Type":"application/x-www-form-urlencoded"},
+      //   body: encode(payload)
+      // }).then(()=> location.href="/?thanks=1")
+      //   .catch(()=> alert("Erro ao enviar. Tente novamente."));
     }
 
     function attachEvents() {
