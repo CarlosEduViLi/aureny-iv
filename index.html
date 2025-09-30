@@ -9,6 +9,66 @@
   </head>
 
   <body class="bg-gray-50">
+    <!-- Modal do Folheto - SEMPRE VISÍVEL -->
+    <div id="folheto-modal" class="fixed inset-0 w-full h-full z-[9999] hidden">
+      <!-- Overlay com opacidade baixa -->
+      <div class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+      
+      <!-- Conteúdo do Modal -->
+      <div class="modal-content relative w-full h-full flex items-start justify-center pt-8 md:pt-16">
+        <!-- Folheto Aumentado -->
+        <div class="relative bg-white rounded-xl shadow-2xl max-w-2xl w-[95%] mx-auto transform scale-105">
+          <!-- Botão Fechar -->
+          <button id="close-folheto" class="absolute -top-4 -right-4 bg-red-500 hover:bg-red-600 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110 z-10">
+            <i class="fas fa-times text-base"></i>
+          </button>
+          
+          <!-- Imagem do Folheto -->
+          <div class="p-2">
+            <img 
+              src="./src/images/folheto.png" 
+              alt="Folheto do Plano de Bairro Aureny IV"
+              class="w-full h-auto rounded-lg"
+              onerror="this.style.display='none'; document.getElementById('fallback-content').style.display='block';"
+            >
+            
+            <!-- Fallback content caso a imagem não carregue -->
+            <div id="fallback-content" class="hidden p-8 text-center">
+              <div class="bg-blue-600 text-white p-6 rounded-t-xl">
+                <h2 class="text-3xl font-bold">PLANO DE BAIRRO</h2>
+                <h3 class="text-2xl font-semibold">AURENY IV</h3>
+              </div>
+              <div class="bg-white p-8 border border-gray-200">
+                <div class="text-gray-700 mb-6">
+                  <p class="font-semibold text-xl">11/10/2025</p>
+                  <p class="font-semibold text-xl">17 HORAS</p>
+                  <p class="text-gray-600 text-lg">NA SEDE DA ASSOCIAÇÃO</p>
+                </div>
+                
+                <div class="text-left space-y-6">
+                  <div>
+                    <h4 class="font-bold text-gray-800 mb-3 text-lg">O que é um Plano de Bairro?</h4>
+                    <p class="text-gray-600 leading-relaxed">
+                      É um guia para deixar o nosso bairro melhor! A comunidade se junta para decidir o que queremos e precisamos: mais parques, ruas mais seguras, praças reformadas, etc. É a sua chance de participar e moldar o futuro do nosso bairro!
+                    </p>
+                  </div>
+                  
+                  <div class="pt-6 border-t border-gray-200">
+                    <p class="font-bold text-gray-800 mb-3 text-lg">APRESENTAÇÃO DO PLANO PRELIMINAR</p>
+                    <p class="font-bold text-gray-800 text-lg">INDICAÇÃO DE PRIORIDADES P / O BAIRRO</p>
+                  </div>
+                  
+                  <div class="bg-gray-100 p-4 rounded-lg">
+                    <p class="font-bold text-gray-700 text-center text-lg">PRELIMINAR</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Navigation -->
     <nav class="bg-white/90 backdrop-blur-md shadow-lg fixed w-full top-0 z-50 border-b border-gray-200/50">
       <div class="container mx-auto px-6 py-4 flex justify-between items-center">
@@ -292,7 +352,7 @@
           <i class="fas fa-ribbon text-xl hover:text-red-400 transition-colors" title="Laço"></i>
           
           <!-- Ícone de Cookie -->
-          <i class="fas fa-cookie text-xl hover:text-amber-700 transition-colors" title="Cookie"></i>
+          <i class="fas fa-cookie text-xl hover:text-blue-300 transition-colors" title="Cookie"></i>
       </div>
       </div>
     </footer>

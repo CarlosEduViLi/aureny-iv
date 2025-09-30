@@ -1,16 +1,80 @@
 document.addEventListener("DOMContentLoaded", () => {
   /* =========================
-     1) Animação nas imagens do herói
+     INICIALIZAÇÃO GERAL
   ========================== */
-  const images = document.querySelectorAll(".hero-image");
-  images.forEach((image, index) => {
-    image.classList.add("animate-float");
-    if (index === 1) image.classList.add("animate-float-delay-1");
-    if (index === 2) image.classList.add("animate-float-delay-2");
-  });
+  console.log("Inicializando Aureny IV...");
 
   /* =========================
-     2) Highlight da navegação ao rolar
+     1) MODAL DO FOLHETO (SEMPRE VISÍVEL, EXCETO QUANDO O CARD DE AGRADECIMENTO ESTIVER ATIVO)
+  ========================== */
+  const folhetoModal = document.getElementById("folheto-modal");
+  const closeFolhetoBtn = document.getElementById("close-folheto");
+
+  function abrirModalFolheto() {
+    // Verifica se o card de agradecimento está visível
+    const thankyouCard = document.getElementById("thankyou-card");
+    if (thankyouCard && !thankyouCard.classList.contains("hidden")) {
+      console.log("Card de agradecimento ativo, não abrindo folheto");
+      return;
+    }
+    
+    console.log("Abrindo modal do folheto...");
+    
+    folhetoModal.classList.remove("hidden");
+    
+    // Pequeno delay para a animação
+    setTimeout(() => {
+      folhetoModal.classList.add("show");
+    }, 50);
+  }
+
+  function fecharModalFolheto() {
+    console.log("Fechando modal do folheto...");
+    
+    folhetoModal.classList.remove("show");
+    
+    setTimeout(() => {
+      folhetoModal.classList.add("hidden");
+    }, 400);
+  }
+
+  // Inicializar modal do folheto
+  if (folhetoModal) {
+    // Mostra o modal imediatamente ao carregar
+    setTimeout(abrirModalFolheto, 300);
+    
+    // Event listeners
+    if (closeFolhetoBtn) {
+      closeFolhetoBtn.addEventListener("click", fecharModalFolheto);
+    }
+    
+    folhetoModal.addEventListener("click", function(e) {
+      if (e.target === folhetoModal) {
+        fecharModalFolheto();
+      }
+    });
+    
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape" && !folhetoModal.classList.contains("hidden")) {
+        fecharModalFolheto();
+      }
+    });
+  }
+
+  /* =========================
+     2) Animação nas imagens do herói
+  ========================== */
+  const images = document.querySelectorAll(".hero-image");
+  if (images.length > 0) {
+    images.forEach((image, index) => {
+      image.classList.add("animate-float");
+      if (index === 1) image.classList.add("animate-float-delay-1");
+      if (index === 2) image.classList.add("animate-float-delay-2");
+    });
+  }
+
+  /* =========================
+     3) Highlight da navegação ao rolar
   ========================== */
   const sections = document.querySelectorAll("section[id]");
   const navLinks = document.querySelectorAll(".nav-link");
@@ -22,24 +86,26 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  const navObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        removeActiveClasses();
-        const currentLink = document.querySelector(
-          `.nav-link[href="#${entry.target.id}"]`
-        );
-        if (currentLink) activeClasses.forEach((c) => currentLink.classList.add(c));
-      });
-    },
-    { root: null, rootMargin: "0px", threshold: 0.6 }
-  );
+  if (sections.length > 0 && navLinks.length > 0) {
+    const navObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          removeActiveClasses();
+          const currentLink = document.querySelector(
+            `.nav-link[href="#${entry.target.id}"]`
+          );
+          if (currentLink) activeClasses.forEach((c) => currentLink.classList.add(c));
+        });
+      },
+      { root: null, rootMargin: "0px", threshold: 0.6 }
+    );
 
-  sections.forEach((section) => navObserver.observe(section));
+    sections.forEach((section) => navObserver.observe(section));
+  }
 
   /* =========================
-     3) Menu mobile (hamburger)
+     4) Menu mobile (hamburger)
   ========================== */
   const hamburgerButton = document.getElementById("hamburger-button");
   const mobileMenu = document.getElementById("mobile-menu");
@@ -47,48 +113,55 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (hamburgerButton && mobileMenu) {
     hamburgerButton.addEventListener("click", () => {
-      mobileMenu.classList.toggle("hidden");
-      hamburgerButton.innerHTML = mobileMenu.classList.contains("hidden") 
+      const isHidden = mobileMenu.classList.toggle("hidden");
+      hamburgerButton.innerHTML = isHidden 
         ? '<i class="fas fa-bars text-xl"></i>'
         : '<i class="fas fa-times text-xl"></i>';
     });
   }
   
-  if (mobileLinks.length) {
+  if (mobileLinks.length > 0) {
     mobileLinks.forEach((link) => {
       link.addEventListener("click", () => {
         mobileMenu.classList.add("hidden");
-        hamburgerButton.innerHTML = '<i class="fas fa-bars text-xl"></i>';
+        if (hamburgerButton) {
+          hamburgerButton.innerHTML = '<i class="fas fa-bars text-xl"></i>';
+        }
       });
     });
   }
 
   /* =========================
-     4) Reveal on scroll
+     5) Reveal on scroll
   ========================== */
   const revealables = document.querySelectorAll("[data-reveal]");
-  const revealIO = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        const el = entry.target;
-        if (entry.isIntersecting) {
-          el.classList.add("in-view");
-        } else {
-          el.classList.remove("in-view");
-        }
-      });
-    },
-    { threshold: 0.15 }
-  );
-  revealables.forEach((el) => revealIO.observe(el));
+  if (revealables.length > 0) {
+    const revealIO = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const el = entry.target;
+          if (entry.isIntersecting) {
+            el.classList.add("in-view");
+          } else {
+            el.classList.remove("in-view");
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    revealables.forEach((el) => revealIO.observe(el));
+  }
 
   /* =========================
-     5) Smooth scrolling para âncoras
+     6) Smooth scrolling para âncoras
   ========================== */
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      if (href === '#') return;
+      
       e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
+      const target = document.querySelector(href);
       if (target) {
         target.scrollIntoView({
           behavior: 'smooth',
@@ -99,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /* =========================
-     6) Formulário de Eixos
+     7) Formulário de Eixos
   ========================== */
   const form = document.getElementById("form-eixos");
   const feedbackMessage = document.getElementById("feedback-message");
@@ -110,12 +183,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const encode = (obj) => {
     const str = [];
-    for (const p in obj)
+    for (const p in obj) {
       if (obj.hasOwnProperty(p)) {
         str.push(
           encodeURIComponent(p) + "=" + encodeURIComponent(obj[p])
         );
       }
+    }
     return str.join("&");
   };
 
@@ -131,6 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  // Inicializar seleção de eixos
   document.querySelectorAll(".eixo-card").forEach((card) => {
     card.addEventListener("click", () => {
       const id = card.id;
@@ -151,15 +226,16 @@ document.addEventListener("DOMContentLoaded", () => {
       event.preventDefault();
 
       if (selectionOrder.length === 0) {
-        feedbackMessage.textContent =
-          "Por favor, selecione pelo menos um eixo em ordem de prioridade.";
+        if (feedbackMessage) {
+          feedbackMessage.textContent = "Por favor, selecione pelo menos um eixo em ordem de prioridade.";
+        }
         return;
       }
 
-      if (prioridadesInput)
-        prioridadesInput.value = JSON.stringify(selectionOrder);
-      if (sugestaoHiddenInput && outroEixoTextarea)
+      if (prioridadesInput) prioridadesInput.value = JSON.stringify(selectionOrder);
+      if (sugestaoHiddenInput && outroEixoTextarea) {
         sugestaoHiddenInput.value = outroEixoTextarea.value || "";
+      }
 
       try {
         await fetch("/", {
@@ -179,16 +255,17 @@ document.addEventListener("DOMContentLoaded", () => {
         if (prioridadesInput) prioridadesInput.value = "";
         if (sugestaoHiddenInput) sugestaoHiddenInput.value = "";
 
-        // MUDANÇA: Agora usa o card básico em vez do modal
         abrirCardAgradecimento();
       } catch (e) {
-        feedbackMessage.textContent = "Erro ao enviar. Tente novamente.";
+        if (feedbackMessage) {
+          feedbackMessage.textContent = "Erro ao enviar. Tente novamente.";
+        }
       }
     });
   }
 
   /* =========================
-     CARD DE AGRADECIMENTO (Versão Simplificada)
+     8) CARD DE AGRADECIMENTO
   ========================= */
   const thankyouCard = document.getElementById("thankyou-card");
   const closeCardBtn = document.getElementById("thankyou-close-btn");
@@ -200,10 +277,13 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     
-    // Mostra o card
+    // Fecha o modal do folheto se estiver aberto
+    if (folhetoModal && !folhetoModal.classList.contains("hidden")) {
+      fecharModalFolheto();
+    }
+    
     thankyouCard.classList.remove("hidden");
     
-    // Pequeno delay para a animação
     setTimeout(() => {
       thankyouCard.style.opacity = "1";
       const cardContent = thankyouCard.querySelector(".bg-white");
@@ -216,28 +296,24 @@ document.addEventListener("DOMContentLoaded", () => {
   function fecharCardAgradecimento() {
     if (!thankyouCard) return;
     
-    // Animação de saída
     thankyouCard.style.opacity = "0";
     const cardContent = thankyouCard.querySelector(".bg-white");
     if (cardContent) {
       cardContent.style.transform = "scale(0.95)";
     }
     
-    // Esconde após a animação
     setTimeout(() => {
       thankyouCard.classList.add("hidden");
       
-      // Redireciona para a página inicial
       if (window.location.pathname.includes("formulario.html")) {
         window.location.href = "index.html";
       } else {
-        // Se já está na página inicial, apenas fecha
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
     }, 300);
   }
 
-  // Configurar event listeners
+  // Configurar event listeners do card de agradecimento
   if (closeCardBtn) {
     closeCardBtn.addEventListener("click", fecharCardAgradecimento);
   }
@@ -253,8 +329,30 @@ document.addEventListener("DOMContentLoaded", () => {
   if (params.get("thanks") === "1") {
     console.log("Parâmetro thanks=1 detectado, abrindo card");
     abrirCardAgradecimento();
-    // Limpa a query da URL para não reabrir ao recarregar
     const newUrl = window.location.pathname + (window.location.hash || "");
     window.history.replaceState({}, "", newUrl);
   }
+
+  // Observador para prevenir que o folheto abra quando o card de agradecimento estiver ativo
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+        const thankyouCard = document.getElementById("thankyou-card");
+        const folhetoModal = document.getElementById("folheto-modal");
+        
+        // Se o card de agradecimento estiver visível e o folheto também, fecha o folheto
+        if (thankyouCard && folhetoModal && 
+            !thankyouCard.classList.contains("hidden") && 
+            !folhetoModal.classList.contains("hidden")) {
+          fecharModalFolheto();
+        }
+      }
+    });
+  });
+
+  if (thankyouCard) {
+    observer.observe(thankyouCard, { attributes: true, attributeFilter: ['class'] });
+  }
+
+  console.log("Aureny IV inicializado com sucesso!");
 });

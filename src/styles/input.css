@@ -58,3 +58,96 @@ html {
   0%,100% { transform: translateY(0) }
   50% { transform: translateY(-6px) }
 }
+/* Estilos para o modal do folheto */
+#folheto-modal {
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+#folheto-modal .modal-content {
+  transform: translateY(-100vh);
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#folheto-modal.show {
+  opacity: 1;
+}
+
+#folheto-modal.show .modal-content {
+  transform: translateY(0);
+}
+
+/* Animações para o modal do folheto */
+@keyframes slideDown {
+  from {
+    transform: translateY(-100vh);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Garantir que o modal tenha alta prioridade */
+#folheto-modal {
+  z-index: 9999 !important;
+}
+
+/* Melhorar a aparência do botão de fechar */
+#close-folheto {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  border: 2px solid white;
+}
+
+#close-folheto:hover {
+  transform: scale(1.15);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* Tornar o modal responsivo */
+@media (max-width: 768px) {
+  #folheto-modal .modal-content {
+    padding-top: 2rem;
+  }
+  
+  #folheto-modal .max-w-2xl {
+    max-width: 98%;
+    margin: 0 auto;
+  }
+  
+  #folheto-modal .transform.scale-105 {
+    transform: scale(1) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  #folheto-modal .modal-content {
+    padding-top: 1rem;
+  }
+  
+  #folheto-modal .p-8 {
+    padding: 1.5rem;
+  }
+}
+
+/* Garantir que o card de agradecimento tenha prioridade sobre o folheto */
+#thankyou-card {
+  z-index: 10000 !important;
+}
+
+#folheto-modal {
+  z-index: 9999 !important;
+}
+
+/* Quando o card de agradecimento estiver ativo, esconder o folheto */
+body.thankyou-active #folheto-modal {
+  display: none !important;
+}
