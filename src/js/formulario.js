@@ -321,14 +321,15 @@ document.addEventListener("DOMContentLoaded", () => {
     
       // Monta JSON legível (labels)
       const payloadObj = {};
-      config.forEach((eixo) => {
-        const ids = selections[eixo.id] || [];
-        payloadObj[eixo.id] = ids.map(
-          (id) => eixo.opcoes.find((o) => o.id === id)?.label || id
-        );
-      });
-      const payloadInput = document.getElementById("payload");
-      if (payloadInput) payloadInput.value = JSON.stringify(payloadObj);
+        config.forEach((eixo) => {
+            const ids = selections[eixo.id] || [];
+            payloadObj[eixo.id] = ids.map((id) => {
+                const label = eixo.opcoes.find((o) => o.id === id)?.label || id;
+                return stripAccents(label);
+            });
+        });
+        const payloadInput = document.getElementById("payload");
+        if (payloadInput) payloadInput.value = JSON.stringify(payloadObj);
     
       // Padrão Netlify (não impedir). Para usar fetch, descomente abaixo.
       // e.preventDefault();
@@ -363,6 +364,12 @@ document.addEventListener("DOMContentLoaded", () => {
         showStep(Math.max(currentStep - 1, 0));
       }
     });
+
+    function stripAccents(str) {
+        return (str ?? "")
+            .normalize("NFD")              // separa letras de diacríticos
+            .replace(/[\u0300-\u036f]/g, ""); // remove diacríticos
+    }
     
     form.addEventListener("submit", submitForm);
     
