@@ -184,11 +184,28 @@ document.addEventListener("DOMContentLoaded", () => {
         feedbackMessage.textContent = "Erro ao enviar. Tente novamente.";
       }
     });
-  }
 
   // =========================
-  // A) Modal de Agradecimento (independente de existir form)
+  // B) Auto-abrir modal se veio de ?thanks=1
   // =========================
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("thanks") === "1") {
+    abrirModalAgradecimento();
+    // limpa a query da URL para não reabrir ao recarregar
+    const newUrl = window.location.pathname + (window.location.hash || "");
+    window.history.replaceState({}, "", newUrl);
+  }
+
+    if (closeBtn) closeBtn.addEventListener("click", fecharModalAgradecimento);
+    if (okBtn) okBtn.addEventListener("click", fecharModalAgradecimento);
+    modal?.addEventListener("click", (e) => {
+      if (e.target === modal) fecharModalAgradecimento();
+    });
+  }
+
+  /* =========================
+    MODAL DE AGRADECIMENTO (Corrigido)
+  ========================= */
   const modal = document.getElementById("thankyou-modal");
   const closeBtn = document.getElementById("thankyou-close");
   const okBtn = document.getElementById("thankyou-ok");
@@ -213,13 +230,22 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function abrirModalAgradecimento() {
-    if (!modal) return;
+    console.log("Abrindo modal de agradecimento"); // Para debug
+    if (!modal) {
+      console.error("Modal não encontrado!");
+      return;
+    }
+    
     window.scrollTo({ top: 0, behavior: "smooth" });
     lastFocused = document.activeElement;
     modal.classList.remove("hidden");
     document.body.classList.add("overflow-hidden");
-    setTimeout(() => { okBtn && okBtn.focus(); }, 50);
     document.addEventListener("keydown", trapFocus);
+    
+    // Foco no botão OK após um pequeno delay
+    setTimeout(() => { 
+      if (okBtn) okBtn.focus(); 
+    }, 100);
   }
 
   function fecharModalAgradecimento() {
@@ -230,18 +256,25 @@ document.addEventListener("DOMContentLoaded", () => {
     if (lastFocused) lastFocused.focus();
   }
 
-  if (closeBtn) closeBtn.addEventListener("click", fecharModalAgradecimento);
-  if (okBtn) okBtn.addEventListener("click", () => {
-    fecharModalAgradecimento();
-  });
-  modal?.addEventListener("click", (e) => {
-    if (e.target === modal) fecharModalAgradecimento();
-  });
+  // Configurar event listeners uma única vez
+  if (closeBtn) {
+    closeBtn.addEventListener("click", fecharModalAgradecimento);
+  }
+  if (okBtn) {
+    okBtn.addEventListener("click", fecharModalAgradecimento);
+  }
+  if (modal) {
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) fecharModalAgradecimento();
+    });
+  }
 
-  // Auto-abrir modal quando veio de /?thanks=1 (agora funciona mesmo sem o form)
+  // Auto-abrir modal se veio de ?thanks=1
   const params = new URLSearchParams(window.location.search);
   if (params.get("thanks") === "1") {
+    console.log("Parâmetro thanks=1 detectado, abrindo modal");
     abrirModalAgradecimento();
+    // Limpa a query da URL para não reabrir ao recarregar
     const newUrl = window.location.pathname + (window.location.hash || "");
     window.history.replaceState({}, "", newUrl);
   }
