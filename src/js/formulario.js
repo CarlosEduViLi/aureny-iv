@@ -270,39 +270,51 @@ document.addEventListener("DOMContentLoaded", () => {
 
         syncVisual(eixoId);
     }
-    
-
-    function getCorDoEixo(eixoId){
-        return (config.find(e => e.id === eixoId)?.cor) || "blue";
-    }
 
     function syncVisual(eixoId) {
-        const cor = getCorDoEixo(eixoId);
-        document
-            .querySelectorAll(`input.eixo-checkbox[data-eixo="${eixoId}"]`)
-            .forEach((input) => {
+        const corMap = {
+            'educacao': 'blue',
+            'saude': 'green', 
+            'infraestrutura': 'orange',
+            'habitacao': 'purple',
+            'ambiente': 'teal',
+            'cultura': 'pink'
+        };
+        
+        const cor = corMap[eixoId] || 'blue';
+        
+        document.querySelectorAll(`input.eixo-checkbox[data-eixo="${eixoId}"]`).forEach((input) => {
             const card = input.closest("label");
             const box = card.querySelector(".check-visual");
             const active = selections[eixoId]?.includes(input.value);
 
-            // Limpa classes ‘azuis’ antigas
-            card.classList.remove("border-blue-500","bg-blue-50");
-            box.classList.remove("bg-blue-600","border-blue-600");
+            // Remove todas as classes de cor possíveis
+            card.classList.remove(
+                'border-blue-500', 'bg-blue-50',
+                'border-green-500', 'bg-green-50', 
+                'border-orange-500', 'bg-orange-50',
+                'border-purple-500', 'bg-purple-50',
+                'border-teal-500', 'bg-teal-50',
+                'border-pink-500', 'bg-pink-50'
+            );
+            
+            box.classList.remove(
+                'bg-blue-600', 'border-blue-600',
+                'bg-green-600', 'border-green-600',
+                'bg-orange-600', 'border-orange-600', 
+                'bg-purple-600', 'border-purple-600',
+                'bg-teal-600', 'border-teal-600',
+                'bg-pink-600', 'border-pink-600'
+            );
 
-            // Aplica a do eixo atual (usa template string)
-            card.classList.toggle(`border-${cor}-500`, active);
-            card.classList.toggle(`bg-${cor}-50`, active);
-            box.classList.toggle(`bg-${cor}-600`, active);
-            box.classList.toggle(`border-${cor}-600`, active);
+            // Aplica classes específicas baseadas na cor mapeada
+            if (active) {
+                card.classList.add(`border-${cor}-500`, `bg-${cor}-50`);
+                box.classList.add(`bg-${cor}-600`, `border-${cor}-600`);
+            }
         });
     }
     
-    // URL encode
-    function encode(obj) {
-      return Object.keys(obj)
-        .map((k) => encodeURIComponent(k) + "=" + encodeURIComponent(obj[k] ?? ""))
-        .join("&");
-    }
     
     // Submit (preenche inputs hidden + payload)
     function submitForm(e) {

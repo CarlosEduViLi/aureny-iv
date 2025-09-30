@@ -179,101 +179,80 @@ document.addEventListener("DOMContentLoaded", () => {
         if (prioridadesInput) prioridadesInput.value = "";
         if (sugestaoHiddenInput) sugestaoHiddenInput.value = "";
 
-        abrirModalAgradecimento();
+        // MUDANÇA: Agora usa o card básico em vez do modal
+        abrirCardAgradecimento();
       } catch (e) {
         feedbackMessage.textContent = "Erro ao enviar. Tente novamente.";
       }
     });
-
-  // =========================
-  // B) Auto-abrir modal se veio de ?thanks=1
-  // =========================
-  const params = new URLSearchParams(window.location.search);
-  if (params.get("thanks") === "1") {
-    abrirModalAgradecimento();
-    // limpa a query da URL para não reabrir ao recarregar
-    const newUrl = window.location.pathname + (window.location.hash || "");
-    window.history.replaceState({}, "", newUrl);
-  }
-
-    if (closeBtn) closeBtn.addEventListener("click", fecharModalAgradecimento);
-    if (okBtn) okBtn.addEventListener("click", fecharModalAgradecimento);
-    modal?.addEventListener("click", (e) => {
-      if (e.target === modal) fecharModalAgradecimento();
-    });
   }
 
   /* =========================
-    MODAL DE AGRADECIMENTO (Corrigido)
+     CARD DE AGRADECIMENTO (Versão Simplificada)
   ========================= */
-  const modal = document.getElementById("thankyou-modal");
-  const closeBtn = document.getElementById("thankyou-close");
-  const okBtn = document.getElementById("thankyou-ok");
-  let lastFocused = null;
+  const thankyouCard = document.getElementById("thankyou-card");
+  const closeCardBtn = document.getElementById("thankyou-close-btn");
 
-  function trapFocus(e) {
-    if (!modal || modal.classList.contains("hidden")) return;
-    if (e.key === "Tab") {
-      const focusables = modal.querySelectorAll(
-        'button, [href], textarea, input, select, [tabindex]:not([tabindex="-1"])'
-      );
-      const first = focusables[0];
-      const last = focusables[focusables.length - 1];
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault(); last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault(); first.focus();
-      }
-    } else if (e.key === "Escape") {
-      fecharModalAgradecimento();
-    }
-  }
-
-  function abrirModalAgradecimento() {
-    console.log("Abrindo modal de agradecimento"); // Para debug
-    if (!modal) {
-      console.error("Modal não encontrado!");
+  function abrirCardAgradecimento() {
+    console.log("Abrindo card de agradecimento");
+    if (!thankyouCard) {
+      console.error("Card de agradecimento não encontrado!");
       return;
     }
     
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    lastFocused = document.activeElement;
-    modal.classList.remove("hidden");
-    document.body.classList.add("overflow-hidden");
-    document.addEventListener("keydown", trapFocus);
+    // Mostra o card
+    thankyouCard.classList.remove("hidden");
     
-    // Foco no botão OK após um pequeno delay
-    setTimeout(() => { 
-      if (okBtn) okBtn.focus(); 
-    }, 100);
+    // Pequeno delay para a animação
+    setTimeout(() => {
+      thankyouCard.style.opacity = "1";
+      const cardContent = thankyouCard.querySelector(".bg-white");
+      if (cardContent) {
+        cardContent.style.transform = "scale(1)";
+      }
+    }, 50);
   }
 
-  function fecharModalAgradecimento() {
-    if (!modal) return;
-    modal.classList.add("hidden");
-    document.body.classList.remove("overflow-hidden");
-    document.removeEventListener("keydown", trapFocus);
-    if (lastFocused) lastFocused.focus();
+  function fecharCardAgradecimento() {
+    if (!thankyouCard) return;
+    
+    // Animação de saída
+    thankyouCard.style.opacity = "0";
+    const cardContent = thankyouCard.querySelector(".bg-white");
+    if (cardContent) {
+      cardContent.style.transform = "scale(0.95)";
+    }
+    
+    // Esconde após a animação
+    setTimeout(() => {
+      thankyouCard.classList.add("hidden");
+      
+      // Redireciona para a página inicial
+      if (window.location.pathname.includes("formulario.html")) {
+        window.location.href = "index.html";
+      } else {
+        // Se já está na página inicial, apenas fecha
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }, 300);
   }
 
-  // Configurar event listeners uma única vez
-  if (closeBtn) {
-    closeBtn.addEventListener("click", fecharModalAgradecimento);
+  // Configurar event listeners
+  if (closeCardBtn) {
+    closeCardBtn.addEventListener("click", fecharCardAgradecimento);
   }
-  if (okBtn) {
-    okBtn.addEventListener("click", fecharModalAgradecimento);
-  }
-  if (modal) {
-    modal.addEventListener("click", (e) => {
-      if (e.target === modal) fecharModalAgradecimento();
+
+  if (thankyouCard) {
+    thankyouCard.addEventListener("click", (e) => {
+      if (e.target === thankyouCard) fecharCardAgradecimento();
     });
   }
 
-  // Auto-abrir modal se veio de ?thanks=1
+  // Auto-abrir card se veio de ?thanks=1
   const params = new URLSearchParams(window.location.search);
   if (params.get("thanks") === "1") {
-    console.log("Parâmetro thanks=1 detectado, abrindo modal");
-    abrirModalAgradecimento();
+    console.log("Parâmetro thanks=1 detectado, abrindo card");
+    abrirCardAgradecimento();
     // Limpa a query da URL para não reabrir ao recarregar
     const newUrl = window.location.pathname + (window.location.hash || "");
     window.history.replaceState({}, "", newUrl);
