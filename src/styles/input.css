@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+
 @keyframes float {
   0%, 100% {
     transform: translateY(0px);
@@ -47,4 +48,13 @@ html {
     transform: none;
     opacity: 1;
   }
+}
+
+/* animação sutil (opcional) */
+@layer utilities {
+  .animate-float { @apply motion-safe:animate-[float_6s_ease-in-out_infinite]; }
+}
+@keyframes float {
+  0%,100% { transform: translateY(0) }
+  50% { transform: translateY(-6px) }
 }
