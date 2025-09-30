@@ -185,7 +185,25 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-     // =========================
+  // =========================
+  // B) Auto-abrir modal se veio de ?thanks=1
+  // =========================
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("thanks") === "1") {
+    abrirModalAgradecimento();
+    // limpa a query da URL para não reabrir ao recarregar
+    const newUrl = window.location.pathname + (window.location.hash || "");
+    window.history.replaceState({}, "", newUrl);
+  }
+
+    if (closeBtn) closeBtn.addEventListener("click", fecharModalAgradecimento);
+    if (okBtn) okBtn.addEventListener("click", fecharModalAgradecimento);
+    modal?.addEventListener("click", (e) => {
+      if (e.target === modal) fecharModalAgradecimento();
+    });
+  }
+
+  // =========================
   // A) Modal de Agradecimento (independente de existir form)
   // =========================
   const modal = document.getElementById("thankyou-modal");
@@ -238,22 +256,4 @@ document.addEventListener("DOMContentLoaded", () => {
   modal?.addEventListener("click", (e) => {
     if (e.target === modal) fecharModalAgradecimento();
   });
-
-  // =========================
-  // B) Auto-abrir modal se veio de ?thanks=1
-  // =========================
-  const params = new URLSearchParams(window.location.search);
-  if (params.get("thanks") === "1") {
-    abrirModalAgradecimento();
-    // limpa a query da URL para não reabrir ao recarregar
-    const newUrl = window.location.pathname + (window.location.hash || "");
-    window.history.replaceState({}, "", newUrl);
-  }
-
-    if (closeBtn) closeBtn.addEventListener("click", fecharModalAgradecimento);
-    if (okBtn) okBtn.addEventListener("click", fecharModalAgradecimento);
-    modal?.addEventListener("click", (e) => {
-      if (e.target === modal) fecharModalAgradecimento();
-    });
-  }
 });

@@ -370,6 +370,12 @@ document.addEventListener("DOMContentLoaded", () => {
             .normalize("NFD")              // separa letras de diacríticos
             .replace(/[\u0300-\u036f]/g, ""); // remove diacríticos
     }
+
+    const titleInput = form.querySelector('input[name="title"]');
+    if (titleInput) {
+    // exemplo: usar o título do formulário ou algo do usuário
+    titleInput.value = "Prioridades do Aureny IV - " + new Date().toLocaleDateString();
+    }
     
     form.addEventListener("submit", submitForm);
     
