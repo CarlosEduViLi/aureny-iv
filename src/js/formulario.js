@@ -304,54 +304,51 @@ document.addEventListener("DOMContentLoaded", () => {
         .join("&");
     }
     
+    // Submit (preenche inputs hidden + payload)
     function submitForm(e) {
-        e.preventDefault(); // IMPORTANTE: Adicionar esta linha
-        
-        const campos = [
-            "educacao",
-            "saude", 
-            "infraestrutura",
-            "habitacao",
-            "ambiente",
-            "cultura",
-        ];
-        
-        // Preencher os campos hidden
-        campos.forEach((id) => {
-            const inp = form.querySelector(`input[name="${id}"]`);
-            if (inp) inp.value = (selections[id] || []).join(",");
-        });
-
-        // Montar payload JSON
-        const payloadObj = {};
+      const campos = [
+        "educacao",
+        "saude",
+        "infraestrutura",
+        "habitacao",
+        "ambiente",
+        "cultura",
+      ];
+      campos.forEach((id) => {
+        const inp = form.querySelector(`input[name="${id}"]`);
+        if (inp) inp.value = (selections[id] || []).join(",");
+      });
+    
+      // Monta JSON legível (labels)
+      const payloadObj = {};
         config.forEach((eixo) => {
             const ids = selections[eixo.id] || [];
             payloadObj[eixo.id] = ids.map((id) => {
-            const label = eixo.opcoes.find((o) => o.id === id)?.label || id;
-            return stripAccents(label);
+                const label = eixo.opcoes.find((o) => o.id === id)?.label || id;
+                return stripAccents(label);
             });
         });
-        
         const payloadInput = document.getElementById("payload");
         if (payloadInput) payloadInput.value = JSON.stringify(payloadObj);
-
-        // Enviar via Netlify
-        const formData = new FormData(form);
-        
-        fetch("/", {
-            method: "POST",
-            body: formData
-        })
-        .then(() => {
-            console.log("Formulário enviado com sucesso!");
-            // Redirecionar para a página inicial com o parâmetro thanks
-            window.location.href = "/?thanks=1";
-        })
-        .catch((error) => {
-            console.error("Erro ao enviar:", error);
-            alert("Erro ao enviar o formulário. Tente novamente.");
-        });
-        }
+    
+      // Padrão Netlify (não impedir). Para usar fetch, descomente abaixo.
+      // e.preventDefault();
+      // const body = {
+      //   "form-name": "prioridades-aureny",
+      //   ...campos.reduce((acc, id) => {
+      //     acc[id] = form.querySelector(`input[name="${id}"]`).value;
+      //     return acc;
+      //   }, {}),
+      //   payload: payloadInput ? payloadInput.value : ""
+      // };
+      // fetch("/", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      //   body: encode(body)
+      // })
+      //   .then(() => (location.href = "/?thanks=1"))
+      //   .catch(() => alert("Erro ao enviar. Tente novamente."));
+    }
     
     // ==== EVENTOS ====
     stepsContainer.addEventListener("change", onCheckboxChange);
@@ -377,7 +374,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const titleInput = form.querySelector('input[name="title"]');
     if (titleInput) {
     // exemplo: usar o título do formulário ou algo do usuário
-    titleInput.value = "Prioridades do Aureny IV - " + new Date().toLocaleDateString();
+    titleInput.value = "Prioridades do Morador";
     }
     
     form.addEventListener("submit", submitForm);
