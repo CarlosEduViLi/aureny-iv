@@ -197,8 +197,113 @@
       </div>
     </section>
 
+    <!-- Seção do Vídeo de Chamada - OTIMIZADA PARA MOBILE -->
+    <section id="video-chamada" class="bg-white py-16 md:py-20 -mt-1">
+      <div class="container mx-auto px-6">
+        <div data-reveal="up" class="reveal reveal-up text-center mb-12">
+          <div class="inline-flex items-center bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+            <i class="fas fa-calendar-alt mr-2"></i>
+            Evento: 11 de Outubro de 2025
+          </div>
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Participe do Encontro Presencial</h2>
+          <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+            Assista ao convite especial para o evento de construção coletiva do nosso Plano de Bairro
+          </p>
+          <div class="w-20 h-1 bg-blue-600 mx-auto mt-4 rounded-full"></div>
+        </div>
+
+        <div data-reveal="up" class="reveal reveal-up max-w-4xl mx-auto">
+          <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200">
+            <!-- Container do Vídeo -->
+            <div class="relative aspect-video bg-gray-900">
+              <video 
+                controls 
+                class="w-full h-full"
+                aria-label="Vídeo de chamada para o evento do Plano de Bairro Aureny IV"
+                preload="metadata"
+                poster="./src/images/video-poster.jpg"
+              >
+                <source src="./src/video/chamada_plano_de_bairro.mp4" type="video/mp4">
+                <source src="./src/video/chamada_plano_de_bairro.webm" type="video/webm">
+                <p class="text-white p-8 text-center">
+                  Seu navegador não suporta o elemento de vídeo. 
+                  <a href="./src/video/chamada_plano_de_bairro.mp4" class="text-blue-400 underline" download>
+                    Baixe o vídeo aqui
+                  </a>
+                </p>
+              </video>
+              
+              <!-- Overlay de loading -->
+              <div id="video-loading" class="absolute inset-0 flex items-center justify-center bg-gray-900 transition-opacity duration-300">
+                <div class="text-white text-center">
+                  <i class="fas fa-spinner fa-spin text-4xl mb-4"></i>
+                  <p>Carregando vídeo...</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Informações do Evento - VERSÃO MOBILE SIMPLIFICADA -->
+            <div class="p-6 md:p-8">
+              <!-- Versão Desktop (com ícones) -->
+              <div class="hidden md:grid grid-cols-3 gap-6 text-center">
+                <div class="flex flex-col items-center">
+                  <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mb-3">
+                    <i class="fas fa-calendar-day text-xl"></i>
+                  </div>
+                  <h3 class="font-bold text-gray-800 mb-1">Data</h3>
+                  <p class="text-gray-600">11/10/2025</p>
+                </div>
+                
+                <div class="flex flex-col items-center">
+                  <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mb-3">
+                    <i class="fas fa-clock text-xl"></i>
+                  </div>
+                  <h3 class="font-bold text-gray-800 mb-1">Horário</h3>
+                  <p class="text-gray-600">17:00 horas</p>
+                </div>
+                
+                <div class="flex flex-col items-center">
+                  <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mb-3">
+                    <i class="fas fa-map-marker-alt text-xl"></i>
+                  </div>
+                  <h3 class="font-bold text-gray-800 mb-1">Local</h3>
+                  <p class="text-gray-600">Sede da Associação</p>
+                </div>
+              </div>
+              
+              <!-- Versão Mobile (sem ícones, mais limpo) -->
+              <div class="md:hidden space-y-4 text-center">
+                <div class="bg-blue-50 p-4 rounded-lg">
+                  <h3 class="font-bold text-gray-800 mb-1">📅 Data</h3>
+                  <p class="text-gray-600">11/10/2025</p>
+                </div>
+                
+                <div class="bg-blue-50 p-4 rounded-lg">
+                  <h3 class="font-bold text-gray-800 mb-1">⏰ Horário</h3>
+                  <p class="text-gray-600">17:00 horas</p>
+                </div>
+                
+                <div class="bg-blue-50 p-4 rounded-lg">
+                  <h3 class="font-bold text-gray-800 mb-1">📍 Local</h3>
+                  <p class="text-gray-600">Sede da Associação</p>
+                </div>
+              </div>
+              
+              <!-- Botão de Participação -->
+              <div class="mt-6 text-center">
+                <a href="formulario.html" class="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105 w-full md:w-auto">
+                  <i class="fas fa-edit mr-3"></i>
+                  Participar da Pesquisa
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Sobre Nós Section -->
-    <section id="sobre-nos" class="bg-white py-16 md:py-24 -mt-1 relative z-10">
+    <section id="sobre-nos" class="bg-gray-50 py-16 md:py-24 -mt-1 relative z-10">
       <div class="container mx-auto px-6">
         <div data-reveal="up" class="reveal reveal-up flex flex-col items-center mb-16">
           <div class="inline-flex items-center bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold mb-4">
@@ -257,7 +362,7 @@
     </section>
 
     <!-- Objetivos Section -->
-    <section id="objetivos" class="bg-gradient-to-br from-gray-50 to-blue-50 py-16 md:py-24">
+    <section id="objetivos" class="bg-white from-gray-50 to-blue-50 py-16 md:py-24">
       <div class="container mx-auto px-6">
         <div data-reveal="up" class="reveal reveal-up text-center mb-16">
           <div class="inline-flex items-center bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold mb-4">

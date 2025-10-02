@@ -354,5 +354,34 @@ document.addEventListener("DOMContentLoaded", () => {
     observer.observe(thankyouCard, { attributes: true, attributeFilter: ['class'] });
   }
 
+  const video = document.querySelector('video');
+  const videoLoading = document.getElementById('video-loading');
+  
+  if (video) {
+    // Esconder loading quando o vídeo começar a tocar
+    video.addEventListener('loadeddata', function() {
+      videoLoading.style.opacity = '0';
+      setTimeout(() => {
+        videoLoading.style.display = 'none';
+      }, 300);
+    });
+    
+    // Mostrar loading se houver erro
+    video.addEventListener('error', function() {
+      videoLoading.innerHTML = `
+        <div class="text-white text-center">
+          <i class="fas fa-exclamation-triangle text-4xl mb-4"></i>
+          <p>Vídeo não disponível</p>
+          <a href="./src/video/chamada_plano_de_bairro.mp4" class="text-blue-400 underline mt-2 inline-block" download>
+            Baixar vídeo
+          </a>
+        </div>
+      `;
+    });
+    
+    // Tentar carregar o vídeo
+    video.load();
+  }
+
   console.log("Aureny IV inicializado com sucesso!");
 });
