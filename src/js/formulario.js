@@ -148,11 +148,11 @@ document.addEventListener("DOMContentLoaded", () => {
             ${
               idx === 0
                 ? '<div></div>'
-                : `<button type="button" class="btn-prev bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 flex items-center">
+                : `<button type="button" class="btn-prev bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 flex items-center cursor-pointer">
                     <i class="fas fa-arrow-left mr-2"></i>Voltar
                   </button>`
             }
-            <button type="button" class="btn-next bg-${eixo.cor}-600 hover:bg-${eixo.cor}-700 text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 flex items-center">
+            <button type="button" class="btn-next bg-${eixo.cor}-600 hover:bg-${eixo.cor}-700 text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 flex items-center cursor-pointer">
               ${idx === config.length - 1 ? "Finalizar" : "Próximo Eixo"}
               <i class="fas fa-arrow-right ml-2"></i>
             </button>
@@ -177,10 +177,10 @@ document.addEventListener("DOMContentLoaded", () => {
           <div id="review-content" class="space-y-4"></div>
         </div>
         <div class="flex justify-between pt-6 border-t border-gray-200">
-          <button type="button" class="btn-prev bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 flex items-center">
+          <button type="button" class="btn-prev bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 flex items-center cursor-pointer">
             <i class="fas fa-arrow-left mr-2"></i>Voltar
           </button>
-          <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 flex items-center">
+          <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 flex items-center cursor-pointer">
             <i class="fas fa-paper-plane mr-2"></i>Enviar
           </button>
         </div>
