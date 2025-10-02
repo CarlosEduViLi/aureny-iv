@@ -1,19 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Config de eixos
+    // Config de eixos ATUALIZADA
     const config = [
-      {
-        id: "educacao",
-        titulo: "Educação",
-        cor: "blue",
-        descricao:
-          "Qualidade do ensino, acesso à educação infantil, capacitação e infraestrutura escolar.",
-        opcoes: [
-          { id: "melhoria-escolas", label: "Melhoria das escolas públicas" },
-          { id: "educacao-infantil", label: "Ampliação de creches e educação infantil" },
-          { id: "formacao-prof", label: "Cursos de formação profissional" },
-          { id: "acesso-tecnologia", label: "Acesso à tecnologia nas escolas" },
-        ],
-      },
       {
         id: "saude",
         titulo: "Saúde",
@@ -21,24 +8,18 @@ document.addEventListener("DOMContentLoaded", () => {
         descricao:
           "Acesso, qualidade de atendimento, prevenção de doenças e bem-estar.",
         opcoes: [
-          { id: "upas", label: "Ampliação de UPAs e postos de saúde" },
-          { id: "medicos", label: "Mais médicos e especialistas" },
-          { id: "medicamentos", label: "Disponibilidade de medicamentos" },
-          { id: "prevencao", label: "Programas de prevenção" },
+          { id: "postinhos-bairros", label: "Construção de postinhos de saúde nos bairros adjacentes" },
+          { id: "volta-caps", label: "Volta do CAPS" },
         ],
       },
       {
-        id: "infraestrutura",
-        titulo: "Mobilidade, Infraestrutura e Segurança",
+        id: "mobilidade",
+        titulo: "Mobilidade, Infraestrutura e Segurança Pública",
         cor: "orange",
         descricao: "Vias, transporte, iluminação, segurança pública e urbanização.",
         opcoes: [
-          { id: "pavimentacao", label: "Pavimentação de ruas e calçadas" },
-          { id: "transporte", label: "Melhoria do transporte público" },
-          { id: "iluminacao", label: "Iluminação pública adequada" },
-          { id: "seguranca", label: "Aumento da segurança pública" },
-          { id: "saneamento", label: "Saneamento e drenagem" },
-          { id: "sinalizacao", label: "Sinalização de trânsito" },
+          { id: "iluminacao-publica", label: "Melhorias na iluminação pública a fim de torná-la mais eficiente" },
+          { id: "sinalizacao-viaria", label: "Melhora na sinalização viária, realizando a revitalização das faixas de pedestre, quebra molas e placas de sinalização" },
         ],
       },
       {
@@ -48,39 +29,56 @@ document.addEventListener("DOMContentLoaded", () => {
         descricao:
           "Moradia digna, regularização, programas habitacionais e melhorias.",
         opcoes: [
-          { id: "regularizacao", label: "Regularização fundiária" },
-          { id: "programas-habitacionais", label: "Programas habitacionais" },
-          { id: "melhorias-moradia", label: "Melhorias nas moradias" },
-          { id: "urbanizacao", label: "Urbanização de áreas" },
+          { id: "infraestrutura-moradias", label: "Melhoria da infraestrutura das moradias do setor" },
+          { id: "regularizacao-orcamento", label: "Estruturação e Financiamento do Processo de Regularização: Orçamento específico e suficiente para as secretarias municipais responsáveis pelo REURB" },
         ],
       },
       {
-        id: "ambiente",
-        titulo: "Ambiente Físico e Sustentabilidade",
+        id: "educacao",
+        titulo: "Educação",
+        cor: "blue",
+        descricao:
+          "Qualidade do ensino, acesso à educação infantil, capacitação e infraestrutura escolar.",
+        opcoes: [
+          { id: "reforco-escolar", label: "Implantação de programa de reforço escolar" },
+          { id: "novas-salas", label: "Construção de novas salas para reduzir a superlotação" },
+        ],
+      },
+      {
+        id: "meio-ambiente",
+        titulo: "Meio Ambiente",
         cor: "teal",
         descricao:
           "Preservação, áreas verdes, coleta seletiva e sustentabilidade.",
         opcoes: [
-          { id: "areas-verdes", label: "Criação de áreas verdes e praças" },
-          { id: "coleta-seletiva", label: "Coleta seletiva de lixo" },
-          { id: "preservacao", label: "Preservação de nascentes e córregos" },
+          { id: "parque-linear", label: "Construção do Parque Linear do Córrego Machado, promovendo lazer, preservação ambiental e valorização do espaço urbano" },
+          { id: "gestao-lixo", label: "Implantação de um sistema eficiente de gestão do lixo, com coleta seletiva, pontos de entrega voluntária e ações educativas de conscientização comunitária" },
+        ],
+      },
+      {
+        id: "governanca",
+        titulo: "Governança e Empresas",
+        cor: "indigo",
+        descricao: "Gestão pública, transporte, comércio local e associações comunitárias.",
+        opcoes: [
+          { id: "transporte-comercio", label: "Adequação do transporte público à demanda dos comércios locais e a criação de feiras para vendas comunitárias" },
+          { id: "associacao-comerciantes", label: "Criação de uma associação de Comerciantes/Empresários da Aureny IV para a criação de propostas de políticas públicas que auxiliem as empresas locais e as demandas da comunidade" },
         ],
       },
       {
         id: "cultura",
-        titulo: "Cultura, Lazer e Esporte",
+        titulo: "Cultura, Esporte e Lazer",
         cor: "pink",
         descricao:
           "Atividades culturais, lazer, esporte e entretenimento comunitário.",
         opcoes: [
-          { id: "centro-cultural", label: "Centro cultural comunitário" },
-          { id: "areas-lazer", label: "Áreas de lazer e parques" },
-          { id: "quadras-esportivas", label: "Quadras esportivas" },
+          { id: "revitalizacao-pracas", label: "Revitalização das praças" },
+          { id: "quadras-poliesportivas", label: "Construção de quadras poliesportivas" },
         ],
       },
     ];
     
-    // ==== NOVAS DEFINIÇÕES (pedido) ====
+    // ==== CONFIGURAÇÕES ====
     const MAX_OPCOES = 2;
     
     function showStepError(eixoId, msg) {
@@ -95,7 +93,6 @@ document.addEventListener("DOMContentLoaded", () => {
         p.classList.remove("text-red-600");
       }, 3000);
     }
-    // ===================================
     
     const form = document.getElementById("multi-step-form");
     const stepsContainer = document.getElementById("steps-container");
@@ -230,9 +227,8 @@ document.addEventListener("DOMContentLoaded", () => {
         .join("");
     }
     
-    // ==== FUNÇÕES SUBSTITUÍDAS PELA SUA VERSÃO ====
+    // ==== FUNÇÕES DE VALIDAÇÃO E SELEÇÃO ====
     
-    // validateStep com obrigatoriedade de 1 seleção
     function validateStep(idx) {
       if (idx >= config.length) return true;
       const eixo = config[idx];
@@ -242,7 +238,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return temAlgo;
     }
     
-    // Toggle com limite MAX_OPCOES + mensagens
     function onCheckboxChange(e) {
         const cb = e.target;
         if (!cb.matches("input.eixo-checkbox")) return;
@@ -251,20 +246,17 @@ document.addEventListener("DOMContentLoaded", () => {
         selections[eixoId] = selections[eixoId] || [];
 
         if (cb.checked) {
-            // impede duplicata e respeita o limite
             if (selections[eixoId].includes(cb.value)) {
-                // já estava no array; nada a fazer
                 syncVisual(eixoId);
                 return;
             }
             if (selections[eixoId].length >= MAX_OPCOES) {
-                cb.checked = false; // volta ao estado anterior
+                cb.checked = false;
                 showStepError(eixoId, `Máximo de ${MAX_OPCOES} selecionados neste eixo.`);
                 return;
             }
             selections[eixoId].push(cb.value);
         } else {
-            // desmarca => remove do array
             selections[eixoId] = selections[eixoId].filter(v => v !== cb.value);
         }
 
@@ -275,9 +267,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const corMap = {
             'educacao': 'blue',
             'saude': 'green', 
-            'infraestrutura': 'orange',
+            'mobilidade': 'orange',
             'habitacao': 'purple',
-            'ambiente': 'teal',
+            'meio-ambiente': 'teal',
+            'governanca': 'indigo',
             'cultura': 'pink'
         };
         
@@ -295,6 +288,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 'border-orange-500', 'bg-orange-50',
                 'border-purple-500', 'bg-purple-50',
                 'border-teal-500', 'bg-teal-50',
+                'border-indigo-500', 'bg-indigo-50',
                 'border-pink-500', 'bg-pink-50'
             );
             
@@ -304,6 +298,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 'bg-orange-600', 'border-orange-600', 
                 'bg-purple-600', 'border-purple-600',
                 'bg-teal-600', 'border-teal-600',
+                'bg-indigo-600', 'border-indigo-600',
                 'bg-pink-600', 'border-pink-600'
             );
 
@@ -315,16 +310,15 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
     
-    
-    // Submit (preenche inputs hidden + payload)
     function submitForm(e) {
       const campos = [
-        "educacao",
         "saude",
-        "infraestrutura",
+        "mobilidade", 
         "habitacao",
-        "ambiente",
-        "cultura",
+        "educacao",
+        "meio-ambiente",
+        "governanca",
+        "cultura"
       ];
       campos.forEach((id) => {
         const inp = form.querySelector(`input[name="${id}"]`);
@@ -342,24 +336,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         const payloadInput = document.getElementById("payload");
         if (payloadInput) payloadInput.value = JSON.stringify(payloadObj);
-    
-      // Padrão Netlify (não impedir). Para usar fetch, descomente abaixo.
-      // e.preventDefault();
-      // const body = {
-      //   "form-name": "prioridades-aureny",
-      //   ...campos.reduce((acc, id) => {
-      //     acc[id] = form.querySelector(`input[name="${id}"]`).value;
-      //     return acc;
-      //   }, {}),
-      //   payload: payloadInput ? payloadInput.value : ""
-      // };
-      // fetch("/", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      //   body: encode(body)
-      // })
-      //   .then(() => (location.href = "/?thanks=1"))
-      //   .catch(() => alert("Erro ao enviar. Tente novamente."));
     }
     
     // ==== EVENTOS ====
@@ -379,13 +355,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function stripAccents(str) {
         return (str ?? "")
-            .normalize("NFD")              // separa letras de diacríticos
-            .replace(/[\u0300-\u036f]/g, ""); // remove diacríticos
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "");
     }
 
     const titleInput = form.querySelector('input[name="title"]');
     if (titleInput) {
-    // exemplo: usar o título do formulário ou algo do usuário
     titleInput.value = "Prioridades do Morador";
     }
     
