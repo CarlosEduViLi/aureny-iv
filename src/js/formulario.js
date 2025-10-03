@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Config de eixos ATUALIZADA
+    // Config de eixos ATUALIZADA com todos os requisitos
     const config = [
       {
         id: "saude",
@@ -10,6 +10,9 @@ document.addEventListener("DOMContentLoaded", () => {
         opcoes: [
           { id: "postinhos-bairros", label: "Construção de postinhos de saúde nos bairros adjacentes" },
           { id: "volta-caps", label: "Volta do CAPS" },
+          { id: "farmacias-populares", label: "Construção de mais farmácias populares" },
+          { id: "profissionalizacao-saude", label: "Profissionalização dos profissionais de saúde existentes" },
+          { id: "melhoria-estrutura-postinhos", label: "Melhoria da estrutura física dos postinhos" }
         ],
       },
       {
@@ -18,8 +21,15 @@ document.addEventListener("DOMContentLoaded", () => {
         cor: "orange",
         descricao: "Vias, transporte, iluminação, segurança pública e urbanização.",
         opcoes: [
-          { id: "iluminacao-publica", label: "Melhorias na iluminação pública a fim de torná-la mais eficiente" },
+          { id: "calcadas-acessibilidade", label: "Adequação das calçadas para que atendam as normas de micro acessibilidade" },
           { id: "sinalizacao-viaria", label: "Melhora na sinalização viária, realizando a revitalização das faixas de pedestre, quebra molas e placas de sinalização" },
+          { id: "infraestrutura-cicloviaria", label: "Implementação de infraestrutura cicloviária no bairro" },
+          { id: "melhorias-pontos-onibus", label: "Melhorias na infraestrutura dos pontos de ônibus, principalmente dos que não possuem abrigo" },
+          { id: "melhoria-pavimentacao", label: "Melhorias na pavimentação do bairro" },
+          { id: "iluminacao-publica", label: "Melhorias na iluminação pública a fim de torná-la mais eficiente" },
+          { id: "coleta-seletiva", label: "Implementação da coleta seletiva e melhora na gestão de resíduos sólidos (lixo)" },
+          { id: "infraestrutura-basica", label: "Melhorias na infraestrutura básica do bairro" },
+          { id: "seguranca-quadras", label: "Melhoria na segurança pública das quadras" }
         ],
       },
       {
@@ -30,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
           "Moradia digna, regularização, programas habitacionais e melhorias.",
         opcoes: [
           { id: "infraestrutura-moradias", label: "Melhoria da infraestrutura das moradias do setor" },
-          { id: "regularizacao-orcamento", label: "Estruturação e Financiamento do Processo de Regularização: Orçamento específico e suficiente para as secretarias municipais responsáveis pelo REURB" },
+          { id: "regularizacao-orcamento", label: "Estruturação e Financiamento do Processo de Regularização: Orçamento específico e suficiente para as secretarias municipais responsáveis pelo REURB, visando à contratação de técnicos, à modernização de equipamentos e à celeridade na análise e aprovação dos processos de regularização fundiária" }
         ],
       },
       {
@@ -42,6 +52,9 @@ document.addEventListener("DOMContentLoaded", () => {
         opcoes: [
           { id: "reforco-escolar", label: "Implantação de programa de reforço escolar" },
           { id: "novas-salas", label: "Construção de novas salas para reduzir a superlotação" },
+          { id: "quadra-escola", label: "Construção da quadra coberta da Escola Municipal Maria Verônica" },
+          { id: "materiais-didaticos", label: "Aquisição de mais materiais didáticos e recursos pedagógicos" },
+          { id: "seguranca-escolas", label: "Ampliação da segurança entorno das escolas" }
         ],
       },
       {
@@ -51,8 +64,11 @@ document.addEventListener("DOMContentLoaded", () => {
         descricao:
           "Preservação, áreas verdes, coleta seletiva e sustentabilidade.",
         opcoes: [
-          { id: "parque-linear", label: "Construção do Parque Linear do Córrego Machado, promovendo lazer, preservação ambiental e valorização do espaço urbano" },
+          { id: "parque-linear", label: "Consolidação do Parque Linear Urbano Machado, promovendo lazer, preservação ambiental e valorização do espaço urbano" },
+          { id: "recuperacao-ambiental", label: "Recuperação ambiental da AVU Machado e do córrego homônimo" },
+          { id: "drenagem-pluvial", label: "Ampliação da rede de drenagem de águas pluviais do bairro" },
           { id: "gestao-lixo", label: "Implantação de um sistema eficiente de gestão do lixo, com coleta seletiva, pontos de entrega voluntária e ações educativas de conscientização comunitária" },
+          { id: "horta-comunitaria", label: "Reestruturação e fortalecimento da horta comunitária do bairro e agricultura urbana" }
         ],
       },
       {
@@ -63,6 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
         opcoes: [
           { id: "transporte-comercio", label: "Adequação do transporte público à demanda dos comércios locais e a criação de feiras para vendas comunitárias" },
           { id: "associacao-comerciantes", label: "Criação de uma associação de Comerciantes/Empresários da Aureny IV para a criação de propostas de políticas públicas que auxiliem as empresas locais e as demandas da comunidade" },
+          { id: "associacao-moradores", label: "Criar também uma associação de moradores para intermediar as relações entre comunidade e gestão municipal" }
         ],
       },
       {
@@ -74,6 +91,8 @@ document.addEventListener("DOMContentLoaded", () => {
         opcoes: [
           { id: "revitalizacao-pracas", label: "Revitalização das praças" },
           { id: "quadras-poliesportivas", label: "Construção de quadras poliesportivas" },
+          { id: "incentivo-esporte-escolas", label: "Implementação de programas de incentivo a esporte nas escolas" },
+          { id: "revitalizacao-lazer", label: "Revitalização das áreas de lazer" }
         ],
       },
     ];
