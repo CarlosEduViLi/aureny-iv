@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Plano Aureny IV</title>
+    <title>Plano Jardim Aureny IV</title>
 
     <!-- FAVICON -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏘️</text></svg>">
@@ -15,32 +15,38 @@
   <body class="bg-gray-50">
 
     <!-- Modal do Folheto - Design Moderno -->
-    <div id="folheto-modal" class="fixed inset-0 w-full h-full z-[9999] hidden">
+    <div id="folheto-modal" class="fixed inset-0 z-[9999] hidden">
       <!-- Overlay -->
       <div class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
-      
+
       <!-- Conteúdo Centralizado -->
-      <div class="modal-content relative w-full h-full flex items-center justify-center p-6">
-        <!-- Container do Folheto -->
-        <div class="relative bg-white rounded-xl shadow-2xl max-w-md w-full mx-auto">
-          <!-- Botão X Vermelho e Bem Visível -->
+      <div class="relative w-full h-full flex items-center justify-center p-2 sm:p-6">
+        <!-- Container com scroll se precisar -->
+        <div class="relative inline-block bg-white rounded-xl shadow-2xl
+            max-w-[min(94vw,880px)] max-h-[94vh] overflow-auto
+            p-2 sm:p-3">
+          <!-- Botão X -->
           <button
             id="close-folheto"
             aria-label="Fechar folheto"
-            class="group fixed top-4 right-4 md:absolute md:-top-5 md:-right-5
-                  z-[10000] w-11 h-11 md:w-12 md:h-12
+            class="group sticky top-3 left-[calc(100%-3rem)] z-[10000]
+                  w-11 h-11 sm:w-12 sm:h-12
                   rounded-full bg-red-500 text-white shadow-2xl border-4 border-white
                   flex items-center justify-center
                   transition-transform duration-200 ease-out hover:scale-110 focus:outline-none focus:ring-4 focus:ring-red-200">
-            <i class="fas fa-times text-lg md:text-xl transition-transform group-hover:rotate-90"></i>
+            <i class="fas fa-times text-lg sm:text-xl transition-transform group-hover:rotate-90"></i>
           </button>
           
           <!-- Conteúdo do Folheto -->
-          <div class="p-4">
-            <img 
-              src="./src/images/folheto.png" 
+          <div class="p-1 sm:p-2 flex items-center justify-center">
+            <img
+              src="./src/images/folheto.png"
               alt="Folheto do Plano de Bairro Aureny IV"
-              class="w-full h-auto rounded-lg"
+              class="rounded-lg
+                    w-auto h-auto
+                    max-w-[88vw] sm:max-w-[min(84vw,840px)]
+                    max-h-[80vh] sm:max-h-[86vh]
+                    object-contain"
               onerror="this.style.display='none'; document.getElementById('fallback-content').style.display='block';"
             >
             
@@ -48,7 +54,7 @@
             <div id="fallback-content" class="hidden p-4 text-center">
               <div class="bg-blue-600 text-white p-4 rounded-t-xl">
                 <h2 class="text-xl font-bold">PLANO DE BAIRRO</h2>
-                <h3 class="text-lg font-semibold mt-1">AURENY IV</h3>
+                <h3 class="text-lg font-semibold mt-1"> JARDIM AURENY IV</h3>
               </div>
               <div class="bg-white p-4 border border-gray-200">
                 <div class="text-gray-700 mb-4">
@@ -85,7 +91,7 @@
     <nav class="sticky top-0 z-[60] bg-white/90 backdrop-blur-md border-b border-gray-200/50">
       <div class="container mx-auto px-4 md:px-6 h-16 md:h-20 flex items-center justify-between">
         <a href="#home" class="shrink-0 text-2xl md:text-3xl font-bold text-gray-800 hover:text-blue-600 transition-colors">
-          <span class="text-blue-600">Aureny</span> IV
+          <span class="text-blue-600">Jardim Aureny</span> IV
         </a>
 
         <!-- Desktop links -->
@@ -316,7 +322,7 @@
                 <img
                   src="./src/images/equipe1.png"
                   alt="Equipe 1"
-                  class="relative w-full aspect-[4/3] object-cover rounded-2xl
+                  class="relative w-full object-cover rounded-2xl
                         shadow-2xl border-4 border-white ring-1 ring-black/5"
                 />
               </div>
@@ -328,7 +334,7 @@
                   <img
                     src="./src/images/equipe2.png"
                     alt="Equipe 2"
-                    class="relative w-full aspect-[4/3] object-cover rounded-2xl
+                    class="relative aspect-[4/3] object-cover rounded-2xl
                           shadow-xl border-4 border-white ring-1 ring-black/5"
                   />
                 </div>
@@ -339,7 +345,7 @@
                 <img
                   src="./src/images/equipe2.png"
                   alt="Equipe 2"
-                  class="w-full aspect-[4/3] object-cover rounded-2xl shadow-xl ring-1 ring-black/5"
+                  class="w-full object-cover rounded-2xl shadow-xl ring-1 ring-black/5"
                 />
               </div>
 
