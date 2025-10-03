@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Plano Aureny IV</title>
 
-    <!-- FAVICON - Adicione esta linha -->
+    <!-- FAVICON -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏘️</text></svg>">
 
     <link href="./src/styles/output.css" rel="stylesheet" />
@@ -82,52 +82,37 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="bg-white/90 backdrop-blur-md shadow-lg fixed w-full top-0 z-50 border-b border-gray-200/50">
-      <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-        <a href="#home" class="text-3xl font-bold text-gray-800 hover:text-blue-600 transition-colors">
+    <nav class="sticky top-0 z-[60] bg-white/90 backdrop-blur-md border-b border-gray-200/50">
+      <div class="container mx-auto px-4 md:px-6 h-16 md:h-20 flex items-center justify-between">
+        <a href="#home" class="shrink-0 text-2xl md:text-3xl font-bold text-gray-800 hover:text-blue-600 transition-colors">
           <span class="text-blue-600">Aureny</span> IV
         </a>
 
-        <div class="hidden md:flex flex-1 justify-center space-x-8 text-lg font-medium">
-          <a href="#home" class="nav-link text-gray-700 hover:text-blue-600 transition-all duration-300 py-2 px-4 rounded-lg hover:bg-blue-50">
-            <i class="fas fa-home mr-2"></i>Home
-          </a>
-          <a href="#sobre-nos" class="nav-link text-gray-700 hover:text-blue-600 transition-all duration-300 py-2 px-4 rounded-lg hover:bg-blue-50">
-            <i class="fas fa-users mr-2"></i>Sobre Nós
-          </a>
-          <a href="#objetivos" class="nav-link text-gray-700 hover:text-blue-600 transition-all duration-300 py-2 px-4 rounded-lg hover:bg-blue-50">
-            <i class="fas fa-bullseye mr-2"></i>Objetivos
-          </a>
-          <a href="formulario.html" class="nav-link bg-blue-600 text-white hover:bg-blue-700 transition-all duration-300 py-2 px-6 rounded-lg shadow-md hover:shadow-lg">
-            <i class="fas fa-edit mr-2"></i>Formulário
-          </a>
+        <!-- Desktop links -->
+        <div class="hidden lg:flex flex-1 justify-center gap-6 text-base md:text-lg font-medium">
+          <a href="#home" class="nav-link text-gray-700 hover:text-blue-600 py-2 px-3 rounded-lg hover:bg-blue-50 transition"> <i class="fas fa-home mr-2"></i>Home </a>
+          <a href="#sobre-nos" class="nav-link text-gray-700 hover:text-blue-600 py-2 px-3 rounded-lg hover:bg-blue-50 transition"> <i class="fas fa-users mr-2"></i>Sobre Nós </a>
+          <a href="#objetivos" class="nav-link text-gray-700 hover:text-blue-600 py-2 px-3 rounded-lg hover:bg-blue-50 transition"> <i class="fas fa-bullseye mr-2"></i>Objetivos </a>
+          <a href="formulario.html" class="nav-link bg-blue-600 text-white hover:bg-blue-700 py-2 px-5 rounded-lg shadow-md hover:shadow-lg transition"> <i class="fas fa-edit mr-2"></i>Formulário </a>
         </div>
 
-        <div class="md:hidden">
-          <button id="hamburger-button" class="text-gray-700 focus:outline-none p-2 rounded-lg hover:bg-gray-100">
-            <i class="fas fa-bars text-xl"></i>
-          </button>
-        </div>
+        <!-- Botão mobile -->
+        <button id="hamburger-button" class="lg:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 focus:outline-none" aria-expanded="false" aria-controls="mobile-menu">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
       </div>
 
-      <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-md border-t border-gray-200">
-        <a href="#home" class="nav-link-mobile block py-4 px-6 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-b border-gray-100">
-          <i class="fas fa-home mr-3"></i>Home
-        </a>
-        <a href="#sobre-nos" class="nav-link-mobile block py-4 px-6 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-b border-gray-100">
-          <i class="fas fa-users mr-3"></i>Sobre Nós
-        </a>
-        <a href="#objetivos" class="nav-link-mobile block py-4 px-6 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-b border-gray-100">
-          <i class="fas fa-bullseye mr-3"></i>Objetivos
-        </a>
-        <a href="formulario.html" class="nav-link-mobile block py-4 px-6 bg-blue-600 text-white hover:bg-blue-700 transition-colors">
-          <i class="fas fa-edit mr-3"></i>Formulário
-        </a>
+      <!-- Mobile menu: fixed logo abaixo da navbar -->
+      <div id="mobile-menu" class="hidden lg:hidden fixed inset-x-0 top-16 bg-white/95 backdrop-blur-md border-t border-gray-200 shadow-md">
+        <a href="#home" class="nav-link-mobile block py-4 px-6 text-gray-700 hover:bg-blue-50 hover:text-blue-600 border-b border-gray-100"><i class="fas fa-home mr-3"></i>Home</a>
+        <a href="#sobre-nos" class="nav-link-mobile block py-4 px-6 text-gray-700 hover:bg-blue-50 hover:text-blue-600 border-b border-gray-100"><i class="fas fa-users mr-3"></i>Sobre Nós</a>
+        <a href="#objetivos" class="nav-link-mobile block py-4 px-6 text-gray-700 hover:bg-blue-50 hover:text-blue-600 border-b border-gray-100"><i class="fas fa-bullseye mr-3"></i>Objetivos</a>
+        <a href="formulario.html" class="nav-link-mobile block py-4 px-6 bg-blue-600 text-white hover:bg-blue-700"><i class="fas fa-edit mr-3"></i>Formulário</a>
       </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home"   class="bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 text-white
+    <!-- Hero Section CORRIGIDA -->
+    <section id="home" class="bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 text-white
          pt-20 md:pt-24  
          pb-20 md:pb-24  
          overflow-hidden
@@ -166,7 +151,7 @@
         </div>
 
         <div class="w-full md:w-1/2 relative flex justify-center py-10 md:py-0">
-          <div class="relative w-full md:w-4/5 lg:w-3/4 h-80 md:h-[400px]">
+          <div class="relative w-full md:w-4/5 lg:w-3/4 aspect-[4/3] md:aspect-[16/10]">
             <!-- Main Image -->
             <img
               src="./src/images/aurenyimagem2.png"
@@ -191,13 +176,13 @@
         </div>
       </div>
 
-      <!-- Wave Divider Suave -->
-      <div class="absolute bottom-0 left-0 w-full overflow-hidden">
-        <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path
-            d="M0 43.9999C106.667 43.9999 213.333 7.99994 320 7.99994C426.667 7.99994 533.333 43.9999 640 43.9999C746.667 43.9999 853.333 7.99994 960 7.99994C1066.67 7.99994 1173.33 43.9999 1280 43.9999C1386.67 43.9999 1440 19.0266 1440 9.01329V100H0V43.9999Z"
-            class="fill-current bg-white"></path>
-    </svg>
+      <!-- Wave Divider -->
+      <div class="pointer-events-none absolute bottom-0 left-0 w-full h-[72px] md:h-[88px] overflow-hidden">
+        <svg class="w-full h-full block" viewBox="0 0 1440 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <path
+            d="M0 44c106.667 0 213.333-36 320-36s213.333 36 320 36 213.333-36 320-36 213.333 36 320 36 160-24 160-34v90H0V44Z"
+            class="fill-current text-white" />
+        </svg>
       </div>
     </section>
 

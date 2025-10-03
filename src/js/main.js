@@ -112,12 +112,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const mobileLinks = document.querySelectorAll(".nav-link-mobile");
 
   if (hamburgerButton && mobileMenu) {
-    hamburgerButton.addEventListener("click", () => {
-      const isHidden = mobileMenu.classList.toggle("hidden");
-      hamburgerButton.innerHTML = isHidden 
-        ? '<i class="fas fa-bars text-xl"></i>'
-        : '<i class="fas fa-times text-xl"></i>';
-    });
+    const toggleMobile = () => {
+      const open = mobileMenu.classList.toggle("hidden") === false;
+      hamburgerButton.setAttribute("aria-expanded", String(open));
+      hamburgerButton.innerHTML = open
+        ? '<i class="fas fa-times text-xl"></i>'
+        : '<i class="fas fa-bars text-xl"></i>';
+      document.body.classList.toggle("overflow-hidden", open); // trava scroll quando aberto
+    };
+    hamburgerButton.addEventListener("click", toggleMobile);
+    mobileMenu.querySelectorAll("a").forEach(a => a.addEventListener("click", toggleMobile));
   }
   
   if (mobileLinks.length > 0) {
